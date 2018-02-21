@@ -9,20 +9,113 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <title>Drone Communication & User Interfaces</title>
 
 </head>
 <body>
 
-<div class="top-bar top-bar-center">
-    <label style="font-weight:normal;">Drone Communication & User Interfaces</label>
+<div class="top-bar">
+    <label class="headerLabel">Drone Communication & User Interfaces</label>
+    <div class="telemetry">
+        <div class="alt">Alt:</div>
+        <div class="sat">Sat:</div>
+        <div class="battery">
+            <canvas id="myCanvas" width="30" height="30" style="">
+                Your browser does not support the HTML5 canvas tag.</canvas>
+        </div>
+        <div class="attitude">
+            <img height=" 30px" src="img/hud.png">
+        </div>
+        <div class="gps">
+            <img height=" 30px"  src="img/gps.png">
+        </div>
+        <div class="connection-status">
+            <img height=" 30px" src="img/disconnected.png">
+        </div>
+    </div>
 </div>
-
-<label style="font-weight:normal;color:white;font-size:25px;">
-    Team 48: Alec Heffner, Melven Trammel, Jon Bailey, Kyle Robinson
-</label>
-
-
+<div class="battery-window">
+    <label id="voltage">Volt: </label>
+    <label id="current">Current:</label>
+    <label id="remaining">Remaining:</label>
+</div>
+<div class="attitude-window">
+    <div class="hud-house">
+        <div class="sky">
+        </div>
+        <div class="rotate">
+            <div class="land">
+            </div>
+            <div class="scale">
+                <img src="img/roll_gauge.png" width=65px align=middle>
+            </div>
+        </div>
+        <div class="needle">
+            <img src="img/hud-needle.png" width=10px align=middle>
+        </div>
+        <div class="odegree">
+            <img src="img/0degree.png" width=77px align=middle>
+        </div>
+        <div class="hud-moon">
+            <img src="img/hud-moon.png" width=100px align=middle>
+        </div>
+    </div>
+    <div class="hud-data">
+        <label class="hud-labels roll-data" >Roll: &nbsp 0.0&#0176; </label>
+        <label class="hud-labels pitch-data" >Pitch: 0.0&#0176; </label>
+        <label class="hud-labels yaw-data" >Yaw: &nbsp 0.0 &#0176; </label>
+        <label class="hud-labels alt-data" >Alt: &nbsp &nbsp  0.0m </label>
+    </div>
+</div>
+<div class="gps-window">
+    <label id="hdop">HDOP: </label>
+    <label id="satellites">Satellites: </label>
+</div>
+<div class="connection-window">
+    <label id="connection">Disconnected</label>
+</div>
+<div class="app-body" >
+    <div class="video-box"></div>
+    <div class="select-video-window">
+        <div  style='position:absolute;width:120px;font-size:16px;color:white;font-weight:400;padding:5px;padding-right:10px;'>Select video</div>
+        <select id="video-select" style="width: 150px; position:absolute;left:110px; height:30px;border:1px red solid;border-radius:5px;">
+            <option value=0 selected>none</option>
+        </select>
+        <button type="button" class=" start-video" ><i class="fa fa-play"></i> </button>
+        <button type="button" class=" close-video" > <i class="fa fa-times"></i> </button>
+    </div>
+    <div class="joystick-zone1">
+        <label class="joystick-labels up" onmousedown="return false">UP</label>
+        <label class="joystick-labels down" onmousedown="return false">DOWN</label>
+        <label class="joystick-labels left1" onmousedown="return false">TURN<br>LEFT</label>
+        <label class="joystick-labels right1" onmousedown="return false">TURN<br>RIGHT</label>
+        <span class="up-symbol direction-symbol"onmousedown="return false">&#9650;</span>
+        <span class="right-symbol direction-symbol"onmousedown="return false">&#9658;</span>
+        <span class="down-symbol direction-symbol"onmousedown="return false">&#9660;</span>
+        <span class="left-symbol direction-symbol"onmousedown="return false">&#9668;</span>
+        <div class="joystick1" onmousedown="return false"></div>
+    </div>
+    <!--<div class="nnn"></div>-->
+    <div class="joystick-zone2">
+        <label class="joystick-labels up" onmousedown="return false">FRONT</label>
+        <label class="joystick-labels down" onmousedown="return false">BACK</label>
+        <label class="joystick-labels left2" onmousedown="return false">LEFT</label>
+        <label class="joystick-labels right2" onmousedown="return false">RIGHT</label>
+        <span class="up-symbol direction-symbol" onmousedown="return false">&#9650;</span>
+        <span class="right-symbol direction-symbol" onmousedown="return false">&#9658;</span>
+        <span class="down-symbol direction-symbol" onmousedown="return false">&#9660;</span>
+        <span class="left-symbol direction-symbol" onmousedown="return false">&#9668;</span>
+        <div class="joystick2" onmousedown="return false"></div>
+    </div>
+    <div class="footer">
+        <button class="takeoff-button">Take Off</button>
+        <label class="altLabel">Alt:</label>
+        <input type="text" id='height-data' value="5">
+        <button class="land-button">Land</button>
+    </div>
+</div>
+<div class="toast"></div>
 <script type="text/javascript" src="js/flyt_web_sdk/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/flyt_web_sdk/eventemitter2.min.js"></script>
 <script type="text/javascript" src="js/flyt_web_sdk/roslib.min.js"></script>
