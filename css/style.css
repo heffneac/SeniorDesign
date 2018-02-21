@@ -267,8 +267,8 @@ body{
     width:100px;
 /*
     -ms-transform: rotate(20deg); /* IE 9 */
-    /*-webkit-transform: rotate(20deg); /* Safari */*/
-    /*transform: rotate(20deg);*/*/
+    /*-webkit-transform: rotate(20deg); /* Safari */
+    /*transform: rotate(20deg);*/
 }
 .needle{
     position:absolute;
