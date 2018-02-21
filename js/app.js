@@ -92,7 +92,6 @@ $(document).ready(function(){
 })
 
 function socketCallback(){
-
     var listenerBatteryStatus = new ROSLIB.Topic({
             ros :ros,
             name : '/'+namespace+'/mavros/battery',
@@ -113,10 +112,7 @@ function socketCallback(){
             ctx.fillText("100",5,18);
         else
             ctx.fillText(round(message.percentage,2)*100,8,18);
-
-
     });
-
 
     var listenerAttitude = new ROSLIB.Topic({
         ros :ros,
@@ -147,6 +143,7 @@ function socketCallback(){
         messageType : 'sensor_msgs/NavSatFix',
         throttle_rate: 1000
     });
+
     listenerGlobalPositionRaw.subscribe(function(message) {
 
         //            if(gpsTimeout)clearTimeout(gpsTimeout);
@@ -210,6 +207,10 @@ $(".logout").click(function(){
     window.location.replace("index.html");
 
 });
+
+//
+// JOYSTICK CONTROLS
+//
 
 $(".joystick-zone1").on('touchmove',(function(e){
     var pos=$(this).position();
@@ -485,15 +486,11 @@ $(".video").click(function(){
     $(".select-video-window").toggle();
 });
 
+//
+// VIDEO STREAMING CONTROLS
+//
 
 function get_video_list(){
-
-  // var videoPath;
-  // if(ip.search('909')!=-1)
-  //   videoPath = "http://"+videoip+":8080";
-  // else
-  //   videoPath = restPath;
-
   var msgdata={};
   msgdata["namespace"]=namespace;
 
@@ -505,31 +502,21 @@ function get_video_list(){
    data: JSON.stringify(msgdata),
    url: restPath+"/list_streams",
    success: function(data){
-
-
         for(var i=1;i<(Object.keys(data).length+1);i++){
             $("#video-select").append($('<option>', {
                 value: i,
                 text: data["stream"+i]
             }));
         }
-
-
-
      },
      error: function(){
          console.log("Error in list_streams");
      }
   });
-
-
 }
 
 $("#video-select").change(function(){
-    // console.log($(this).children(":selected").html());
     videoLink=$(this).children(":selected").html()+"";
-    // console.log(videoLink);
-
 });
 
 $(".start-video").click(function(){
@@ -541,8 +528,6 @@ $(".start-video").click(function(){
         $("#video-page-img").attr("src",restPath+":8080/stream?topic="+videoLink+"&width=320&height=240&type=ros_compressed");
         $(".video-page-div").show(200);
     }
-
-
 });
 
 $(".close-video").click(function(){
